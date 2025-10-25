@@ -56,6 +56,9 @@ def test_signup_for_activity_full(client):
     activity["participants"] = original_participants
 
 def test_signup_for_activity_duplicate(client):
+    # Ensure there is at least one participant in Chess Club
+    if not activities["Chess Club"]["participants"]:
+        activities["Chess Club"]["participants"].append("duplicate_test@mergington.edu")
     # Try to sign up with an email that's already registered
     existing_email = activities["Chess Club"]["participants"][0]
     response = client.post(f"/activities/Chess Club/signup?email={existing_email}")
